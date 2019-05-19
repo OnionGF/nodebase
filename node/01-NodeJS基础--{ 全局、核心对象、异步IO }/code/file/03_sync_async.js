@@ -1,4 +1,4 @@
-const mypath = 'C:/Users/Administrator/Desktop/Node、Vue视频/19课 md、http收尾（2018.5.17）.mp4'
+const mypath = 'C:/Users/Administrator/Desktop/Node.mp4'
 const fs = require('fs');
 
 

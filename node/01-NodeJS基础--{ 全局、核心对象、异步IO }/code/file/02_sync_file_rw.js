@@ -1,7 +1,7 @@
 // 引入核心对象
 const fs = require('fs');
 
-
+// 计算机的读写都是output
 // 先读后写  (有异常catch)
 let data = fs.readFileSync('./a.txt','utf8');
 console.log(data);

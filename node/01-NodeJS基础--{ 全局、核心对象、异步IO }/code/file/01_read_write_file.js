@@ -7,6 +7,8 @@ fs.readFile('./a.txt','utf8',(err,data)=>{
     // console.log(data);
     // 需要获取字符串数据，就可以调用 buffer篮子.toString(编码)函数
     // console.log(data.toString('utf8'));  默认urf8可以不传递
+    //1、  buffer 是以16进制存储的，用toString() 可以直接转成字符串。
+    //2、也可以如上所示方法将utf8传给readFile
     console.log(data);
 });
 

@@ -101,7 +101,7 @@
 
 * IO
 
-  * I :input输入
+  * I:input输入
   * O:output 输出
   * 文件的操作就是IO
 
@@ -248,4 +248,3 @@
 * 只能是访问 get请求   url: /hero-list  才返回该数据
 * 其他请求返回ok
 
-//123
