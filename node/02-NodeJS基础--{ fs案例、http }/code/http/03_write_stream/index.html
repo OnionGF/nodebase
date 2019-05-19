@@ -1,0 +1,32 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+
+      <span id="info"></span>
+
+      <button id="btn">点我发</button>
+      <script type="text/javascript">
+        var info = document.querySelector('#info');
+        document.querySelector('#btn').onclick = function () {
+            //  发起ajax请求
+            var xhr = new XMLHttpRequest();
+            xhr.open('get','/test');
+            xhr.send();
+            // 处理响应
+            xhr.onreadystatechange = function () {
+              // readyState = 3 的时候是响应中
+              console.log(xhr.readyState); //1,2,3,4
+              console.log(xhr.responseText);
+              var arr = xhr.responseText.split('^_^')
+              console.log(arr[arr.length-2]);
+              info.innerText = arr[arr.length-2];
+            }
+        }
+
+
+      </script>
+</body>
+</html>
