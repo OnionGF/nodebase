@@ -1,0 +1,18 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+    我是英雄列表
+    <hr/>
+      imports.num: {{ num}}
+      imports.reverse   {{ reverse('abcde')   }}
+    <hr/>
+    <ul>
+      {{each heros}}
+        <li>{{$value.name}}</li>
+      {{/each}}
+    </ul>
+</body>
+</html>

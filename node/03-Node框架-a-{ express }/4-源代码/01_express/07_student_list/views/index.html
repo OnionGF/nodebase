@@ -1,0 +1,27 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+
+  英雄列表:
+  <ul>
+    {{each heros}}
+     <li>
+        {{$value.nickname}}
+        <img src="{{$value.img}}"> 
+     </li>
+    {{/each}}
+  </ul>
+
+<!-- 同步表单上传文件的时候，表单，一定要加上enctype="multipart/form-data" -->
+  <form action="/add" method="post" enctype="multipart/form-data" >
+    网名:<input type="text" name="nickname">
+    头像:<input type="file" name="avater">
+    <button>添加</button>
+  </form>
+
+
+</body>
+</html>
