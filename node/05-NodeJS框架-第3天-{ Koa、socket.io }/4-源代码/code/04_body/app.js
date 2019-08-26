@@ -8,6 +8,7 @@ app.use(bodyParser());
 app.use(async ctx => {
   // the parsed body will store in ctx.request.body
   // if nothing was parsed, body will be an empty object {}
+  console.log('ctx.request.rowBody',ctx.request.rowBody)
   ctx.body = ctx.request.body;  
 
   /*
@@ -25,4 +26,6 @@ app.use(async ctx => {
     */
 });
 
-app.listen(8888);
+app.listen(8888,()=>{
+  console.log('项目启动在8888端口...')
+});
