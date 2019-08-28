@@ -2,7 +2,7 @@ const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
 
 // 1:引入
-const Router = require('koa-router');
+const Router = require('koa-router'); // 路由中间件
 
 var app = new Koa();
 
@@ -13,6 +13,7 @@ router.get('/',async ctx => {
   ctx.body = '首页';
 })
 .post('/post',async ctx => {
+  console.log('ctx.request.body',ctx.request.body)
   ctx.body = ctx.request.body; // 直接响应请求体数据
 })
 
@@ -25,4 +26,6 @@ app.use(router.routes() ); // 将路由与实例挂钩
 // 501服务器不支持该请求方式
 app.use(router.allowedMethods());
 
-app.listen(8888);
+app.listen(8888,()=>{
+  console.log('项目成功启动在8888端口....')
+});

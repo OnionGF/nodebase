@@ -3,7 +3,7 @@ const bodyParser = require('koa-bodyparser');
  
 var app = new Koa();
   
-app.use(bodyParser());
+app.use(bodyParser()); // body中间件
  
 app.use(async ctx => {
   // the parsed body will store in ctx.request.body

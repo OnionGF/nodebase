@@ -42,4 +42,6 @@ app.use(router.routes())
 app.use(router.allowedMethods() )
 
 
-app.listen(8888);
+app.listen(8888,()=>{
+  console.log('项目成功启动在8888端口...')
+});
