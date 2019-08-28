@@ -1,28 +1,16 @@
 const Koa = require('koa');
 
-// 1:引入
+// 1:引入中间件
 const Router = require('koa-router');
 const render = require('koa-art-template');
 const static = require('koa-static');
 const path = require('path');
-
-
 const bodyParser = require('koa-bodyparser');
 
 
 var app = new Koa();
-
-render(app, {
-  // 页面查找的目录
-  root: path.join(__dirname, 'view'),
-  // 设置后缀名
-  extname: '.html',
-  // debug: false 则每次压缩页面及js，包括混淆，静态数据不会实时更新（不每次都读文件)
-  debug: process.env.NODE_ENV !== 'production'
-});
-
-
 let router = new Router();
+
 router.get('/',async ctx =>{
     // ctx.body = 'index';
     ctx.render('index');
@@ -50,12 +38,21 @@ router.get('/',async ctx =>{
   ctx.body = `当前登录用户为:` + ctx.session.user.username
 })
 
+
+// 中间件koa-art-template、 koa-static
+render(app, {
+  // 页面查找的目录
+  root: path.join(__dirname, 'view'),
+  // 设置后缀名
+  extname: '.html',
+  // debug: false 则每次压缩页面及js，包括混淆，静态数据不会实时更新（不每次都读文件)
+  debug: process.env.NODE_ENV !== 'production'
+});
 // 静态资源
 app.use(static(path.resolve('./public')));
 
 
 const session = require('koa-session');
- 
 // 通过任意字符串为基准进行加密算法的字符串
 app.keys = ['some secret hurr'];
  
@@ -65,7 +62,6 @@ const CONFIG = {
   overwrite: true,
   // false的时候，客户端可以操作cookie
   httpOnly: true, // 不允许在客户端操作cookie
-  
 // {"user":{"username":"abac"},"_expire":1532529416883,"_maxAge":86400000}
 // 未作数据签名
   signed: true, // 数字签名，保证数据不被串改
@@ -74,7 +70,6 @@ const CONFIG = {
 };
  
 app.use(session(CONFIG, app));
-
 
 // ctx.request.body挂载属性
 app.use(bodyParser());
@@ -88,4 +83,6 @@ app.on('error', async (err, ctx) => {
 
 });
 
-app.listen(8888);
+app.listen(8888,()=>{
+  console.log('服务已启动在8888端口....')
+});
