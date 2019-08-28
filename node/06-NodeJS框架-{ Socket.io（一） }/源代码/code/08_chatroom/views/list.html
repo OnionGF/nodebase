@@ -1,0 +1,47 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <div id="box">
+      {{each msgs}}
+      <ul>
+        <li>{{$value.username}}
+      {{$value.content}}</li>
+      </ul>
+    {{/each}}
+  </div>
+
+  {{username}}您好,请说话:  <input type="text" name="newContent" id="newContent"> <button id="btn">发送</button>
+
+  <script type="text/javascript">
+      document.getElementById('btn').onclick = function () {
+        var newContent = document.getElementById('newContent').value;
+        var xhr = new XMLHttpRequest();
+        xhr.open('post','/add');
+        xhr.setRequestHeader('content-type','application/x-www-form-urlencoded')
+        // 最普通的键值对方式 x-www
+        xhr.send('msg=' + newContent);
+        xhr.onreadystatechange = function () {
+          if(xhr.readyState === 4 && xhr.status === 200) {
+            //[{"username":"小明","content":"哈哈"},{"username":"小红","content":"呵呵呵"},{"username":"小刚","content":"嘻嘻嘻"},{"username":"jack"},{"username":"jack"},{"username":"jack","content":"aaaa"}]
+              console.log(xhr.responseText);
+              // 转化为JSON数组
+              var arr = JSON.parse(xhr.responseText);
+              var html = '<ul>'
+              for (var i = arr.length - 1; i >= 0; i--) {
+                  html += '<li>' + arr[i].username + ':' + arr[i].content +'</li>'
+              }
+              html += '</ul>';
+
+              document.getElementById('box').innerHTML = html;
+          }
+        }
+      }
+
+
+  </script>
+
+</body>
+</html>
