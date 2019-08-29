@@ -126,7 +126,7 @@ app.use(async (ctx,next)=> {
       // 执行了
       await next();   // 作为一个同步代码来执行
     } catch (e) {
-      console.log(e);
+      console.log(123,e.message);
       ctx.status = 200;
       ctx.body = `
         <div>
@@ -141,13 +141,13 @@ app.use(router.routes());  // 各种页面的响应
 app.use(router.allowedMethods() )
 
 
-
-
 // 错误处理
 app.on('error', async (err, ctx) => {
   // 仅仅是服务器（后端）方的一个log日志记录
-  console.log(err);
+  console.log(2,err);
 
 });
 
-app.listen(8888);
+app.listen(8888,()=>{
+  console.log('项目启动在8888端口....')
+});
