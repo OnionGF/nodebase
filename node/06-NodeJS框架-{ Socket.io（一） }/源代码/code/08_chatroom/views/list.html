@@ -5,6 +5,7 @@
 </head>
 <body>
   <div id="box">
+      {{ msgs }}
       {{each msgs}}
       <ul>
         <li>{{$value.username}}
@@ -28,14 +29,14 @@
             //[{"username":"小明","content":"哈哈"},{"username":"小红","content":"呵呵呵"},{"username":"小刚","content":"嘻嘻嘻"},{"username":"jack"},{"username":"jack"},{"username":"jack","content":"aaaa"}]
               console.log(xhr.responseText);
               // 转化为JSON数组
-              var arr = JSON.parse(xhr.responseText);
-              var html = '<ul>'
-              for (var i = arr.length - 1; i >= 0; i--) {
-                  html += '<li>' + arr[i].username + ':' + arr[i].content +'</li>'
-              }
-              html += '</ul>';
+              // var arr = JSON.parse(xhr.responseText);
+              // var html = '<ul>'
+              // for (var i = arr.length - 1; i >= 0; i--) {
+              //     html += '<li>' + arr[i].username + ':' + arr[i].content +'</li>'
+              // }
+              // html += '</ul>';
 
-              document.getElementById('box').innerHTML = html;
+              // document.getElementById('box').innerHTML = html;
           }
         }
       }

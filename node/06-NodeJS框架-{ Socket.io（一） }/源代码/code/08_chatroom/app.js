@@ -1,21 +1,20 @@
-// koa 解析请求体数据  登录，koa-session
-// koa-static  koa-router art-template
+const Koa = require('koa')
+const render = require('koa-art-template')
+const static = require('koa-static')
+const Router = require('koa-router')
+const path = require('path')
+const session = require('koa-session')
+const bodyparser = require('koa-bodyparser')
 
-const Koa = require('koa');
-const Router = require('koa-router');
-const static = require('koa-static');
-const render = require('koa-art-template');
-const path = require('path');
-const session = require('koa-session');
-const bodyparser = require('koa-bodyparser');
+let app = new Koa()
+let router = new Router()
+
 
 const msgs = [
-  { username:'小明',content:'哈哈'},
-  { username:'小红',content:'呵呵呵'},
-  { username:'小刚',content:'嘻嘻嘻'},
-];
-
-let app = new Koa();
+  { username : '小敏', content: '你好'},
+  { username : '小行', content: '在吗'},
+  { username : '小是', content: '在的'},
+]
 render(app, {
   // 页面查找的目录
   root: path.join(__dirname, 'views'),
@@ -25,65 +24,64 @@ render(app, {
   debug: process.env.NODE_ENV !== 'production'
 });
 
-
-
-let router = new Router();
 router.get('/',async ctx=>{
-  ctx.render('index');
+  ctx.render('index')
 })
-.post('/login',async ctx => {
-    let {username,password} = ctx.request.body;
-    // 不验证直接挂在session
-    ctx.session.user = {
-      username
-    }
-
-    // 重定向到聊天室
-    ctx.redirect('/list')
+.post('/login',async ctx=> {
+  let {username,password} = ctx.request.body;
+  ctx.session.user = {
+    username
+  }
+  ctx.redirect('/list')
 })
 .get('/list',async ctx=>{
-    ctx.render('list',{
-      username:ctx.session.user.username,
-      msgs
-    });
+  ctx.render('list',{
+    username: ctx.session.user.username,
+    msgs
+  })
 })
 .post('/add',async ctx => {
-    let username = ctx.session.user.username;
-    let content = ctx.request.body.msg;
-    // 加入到数组中,返回最新消息回去
-    msgs.push({
-      username,content
-    });
-    ctx.body = msgs;
+  let username = ctx.session.user.username;
+  let content = ctx.request.body.msg;
+  // 加入到数组中,返回最新消息回去
+  msgs.push({
+    username,content
+  });
+  ctx.body = msgs;
 })
-// 签名的依据
-app.keys = ['test'];
+// 在服务七内存中存储{ session_id: 用户数据}
 
-// 在服务器内存中存储 {session_id:用户数据}
 let store = {
   myStore:{},
-  get:function(key) {
-    return this.myStore[key];
+  get:function(key){
+    return this.myStore[key]
   },
-  set:function(key,session) {
-    this.myStore[key] = session;
+  set:function(key,session){
+    this.myStore[key] = session
   },
-  destroy:function() {
-    delete this.myStore[key];
-  }
+  destroy:function(){
+    delete this.myStore[key]
+  },
 }
-// 处理静态资源
-app.use(static(path.resolve('./public')));
-// 处理session
-app.use(session({store},app,))
-// 处理请求体数据
-app.use(bodyparser());
-// 路由
-app.use(router.routes());
-// 处理405 501
-app.use(router.allowedMethods());
 
+// 签名
+app.keys =['test']
+//处理请求体数据
+app.use(bodyparser())
+
+// 引入处理静态资源
+app.use(static(path.resolve('./public')))
+
+//处理session
+
+app.use(session({store},app))
+
+//路由
+app.use(router.routes())
+
+//c处理404 405
+app.use(router.allowedMethods())
 
 app.listen(8888,()=>{
-  console.log('项目成功启动在8888端口...')
-});
+  console.log("服务器启动在8888端口")
+})
