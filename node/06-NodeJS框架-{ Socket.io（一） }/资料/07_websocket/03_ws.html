@@ -1,0 +1,24 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>03_websocket</title>
+</head>
+<body>
+    <input type="text" name="" id="time">
+    <script type="text/javascript" src="/jquery.js"></script>
+    <script type="text/javascript">
+    //使用websocket的方式实现即时双向通信
+    var ws = new WebSocket('ws://127.0.0.1:8080');//参数为请求地址和url
+    ws.onopen = function(event){//设置连接打开的操作
+        ws.send('我连接上了');
+    };
+    ws.onmessage = function(event){
+        document.getElementById('time').value = event.data;
+    };
+    ws.onclose = function(event){
+        //关闭的操作
+    }
+    // ws.close();
+    </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>02_长连接</title>
+</head>
+<body>
+    <input type="text" name="" id="time">
+    <script type="text/javascript" src="/jquery.js"></script>
+    <script type="text/javascript">
+    //长连接的方式，通过一次请求，服务器保持住连接，在连接超时前响应用户
+        // var xhr = new XMLHttpRequest();
+        // xhr.open('get','/getTimeByLongConn');
+        // xhr.onreadystatechange = function(res){
+        //     //xhr.readyState===3服务器会给上一个头信息，但是数据没有发送完毕
+        //     if(xhr.readyState === 3){
+        //         console.log(xhr.responseText);
+        //     }
+        // }
+        // xhr.send();
+    //HTML5中的eventSource来单向推数据
+    var es = new EventSource('/getTimeByLongConn');
+    es.onmessage = function(e){
+        document.querySelector('#time').value = e.data;
+    }  
+    //关闭该事件源
+    //es.close();
+    </script>
+</body>
+</html>

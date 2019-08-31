@@ -1,0 +1,23 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>01_长轮询</title>
+</head>
+<body>
+    <input type="text" name="" id="time">
+    <script type="text/javascript" src="/jquery.js"></script>
+    <script type="text/javascript">
+    //长轮询的方式，通过浏览器频繁发送请求来更新数据
+        setInterval(function(){
+            $.ajax({
+                type:'get',
+                url:'/getTimerByLongPull',
+                // dataType:'json',
+                success:function(time){
+                    $('#time').val(time);
+                }
+            });
+        },1000);
+    </script>
+</body>
+</html>
